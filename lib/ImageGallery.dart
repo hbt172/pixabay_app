@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pixabay_app/FullScreenImage.dart';
 
 import 'ImageController.dart';
 
@@ -40,13 +41,18 @@ class ImageGallery extends StatelessWidget {
             }
 
             final image = imageController.images[index];
-            return GridTile(
-              footer: GridTileBar(
-                backgroundColor: Colors.black54,
-                title: Text('Likes: ${image['likes']}'),
-                subtitle: Text('Views: ${image['views']}'),
+            return InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenImage(likes: '${image['likes']}', views: '${image['views']}', image: '${image['webformatURL']}')));
+              },
+              child: GridTile(
+                footer: GridTileBar(
+                  backgroundColor: Colors.black54,
+                  title: Text('Likes: ${image['likes']}'),
+                  subtitle: Text('Views: ${image['views']}'),
+                ),
+                child: Image.network(image['webformatURL'], fit: BoxFit.cover),
               ),
-              child: Image.network(image['webformatURL'], fit: BoxFit.cover),
             );
           },
         );
